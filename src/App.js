@@ -16,7 +16,7 @@
 // expo rt default App
 
 import React, { Component } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Login from './pages/login/login'
 import Admin from './pages/admin/admin'
 /*
@@ -26,10 +26,10 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/admin' element={<Admin />} />
-        </Routes>
+        <Switch>
+          <Route path='/login' component={Login} />
+          <Route path='/admin' component={Admin} />
+        </Switch>
       </BrowserRouter>)
   }
 }

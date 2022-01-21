@@ -1,27 +1,72 @@
 /*
 用户登陆的路由组件
 */
-
 import React, { Component } from 'react'
 import './login.less'
 import logo from './images/logo.png'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { reqLogin } from '../../api'
+import { withRouter } from 'react-router';
 
-export default class Login extends Component {
-
-  onFinish = (value) => {
+class Login extends Component {
+  /*
+  async和await
+  1.作用：简化promise对象的使用，不再使用then（）来制定成功/失败的回调函数
+    以同步编码（没有回调函数了）方式实现异步流程
+  2.哪里写await？
+    在返回promise的表达方式左侧写await：不想要promise，想要promise异步执行的成功的value数据
+  3.哪里写async？
+    await所在函数（最近的）定义的左侧写async
+  */
+  onFinish = async (values) => {
     // 这个value就是我们需要获取的值
-    console.log('校验成功', value)
+    const { username, password } = values
+    const response = await reqLogin(username, password)
+    console.log('请求成功', response.data)
+    const result = response.data //{status:0, data:use .....}
+
+    if (result.status === 0) { //登陆成功
+      //提示登陆成功
+      message.success('LOGIN SUCCESSFUL')
+
+      //跳转到管理界面(不需要再退回到登陆)
+      // return <Redirect to='/admin' />
+      // this.props.history('/admin')
+      this.props.history.push('/admin');
+
+
+    }
+    else {
+      message.error(result.msg)
+    }
   }
 
-  onFinishFailed = (values, errorFields, outOfDate) => {
-    console.log("校验失败");
-    values.errorFields.map((x) => {
-      return console.log(x.errors);
-    });
-    //console.log('value------',values)
-  };
+
+
+  // onFinish = async (values) => {
+  //   //console.log("Received values of form: ", values);
+  //   //
+  //   // console.log('this----',this) 
+  //   const { username, password } = values;
+  //   try {
+  //     //调用异步请求，
+  //     this.props.login(username, password);
+
+  //   } catch (error) {
+  //     console.log("请求出错", error);
+  //   }
+  // };
+
+  // onFinishFailed = (values, errorFields, outOfDate) => {
+  //   console.log("校验失败");
+  //   values.errorFields.map((x) => {
+  //     return console.log(x.errors);
+  //   });
+  //   //console.log('value------',values)
+  // };
+
+
 
   validatePwd = (rule, value) => {
     // console.log(value)
@@ -40,6 +85,9 @@ export default class Login extends Component {
 
 
   render() {
+
+
+
     return (
       <div className="login">
         {/* header--------------------------- */}
@@ -62,9 +110,12 @@ export default class Login extends Component {
           <Form name="normal_login" className="login-form"
             initialValues={{ remember: true }}
             onFinish={this.onFinish}
-            onFinishFailed={this.onFinishFailed}>
+            onFinishFailed={this.onFinishFailed}
+          >
 
-            <Form.Item name="username"
+            <Form.Item
+              initialValue='admin'
+              name="username"
               //配置对象：属性名是一些特定的名称
               //声明式验证：直接使用别人定义好的验证规则进行验证
               rules={[
@@ -87,7 +138,8 @@ export default class Login extends Component {
                   pattern: /^[a-zA-Z0-9]+$/,
                   message: "must be letters or numbers",
                 }
-              ]}>
+              ]}
+            >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
                 placeholder="Username"
@@ -133,3 +185,5 @@ export default class Login extends Component {
 //   1.前台表单验证
 //   2.收集表单验证数据
 //         */}
+
+export default withRouter(Login);
