@@ -2,12 +2,15 @@
 用户登陆的路由组件
 */
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import './login.less'
-import logo from './images/logo.png'
+import logo from '../../assets/images/logo.png'
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { reqLogin } from '../../api'
+import allReq from '../../api'
 import { withRouter } from 'react-router';
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
 
 class Login extends Component {
   /*
@@ -22,50 +25,26 @@ class Login extends Component {
   onFinish = async (values) => {
     // 这个value就是我们需要获取的值
     const { username, password } = values
-    const response = await reqLogin(username, password)
-    console.log('请求成功', response.data)
+    const response = await allReq.reqLogin(username, password)
+    // console.log('请求成功', response.data)
     const result = response.data //{status:0, data:use .....}
 
     if (result.status === 0) { //登陆成功
       //提示登陆成功
       message.success('LOGIN SUCCESSFUL')
-
+      //保存user
+      const user = result.data
+      memoryUtils.user = user //保存到内存
+      storageUtils.saveUser(user) //保存到local
       //跳转到管理界面(不需要再退回到登陆)
       // return <Redirect to='/admin' />
       // this.props.history('/admin')
       this.props.history.push('/admin');
-
-
     }
     else {
       message.error(result.msg)
     }
   }
-
-
-
-  // onFinish = async (values) => {
-  //   //console.log("Received values of form: ", values);
-  //   //
-  //   // console.log('this----',this) 
-  //   const { username, password } = values;
-  //   try {
-  //     //调用异步请求，
-  //     this.props.login(username, password);
-
-  //   } catch (error) {
-  //     console.log("请求出错", error);
-  //   }
-  // };
-
-  // onFinishFailed = (values, errorFields, outOfDate) => {
-  //   console.log("校验失败");
-  //   values.errorFields.map((x) => {
-  //     return console.log(x.errors);
-  //   });
-  //   //console.log('value------',values)
-  // };
-
 
 
   validatePwd = (rule, value) => {
@@ -83,10 +62,12 @@ class Login extends Component {
     }
   };
 
-
   render() {
-
-
+    //如果用于已经登陆，自动跳转到管理界面
+    const user = memoryUtils.user
+    if (user && user._id) {
+      return <Redirect to='/'></Redirect> //根目录 自动登录  application local storage
+    }
 
     return (
       <div className="login">
@@ -156,7 +137,6 @@ class Login extends Component {
                 {
                   validator: this.validatePwd,
                 },
-
               ]}>
 
               <Input
@@ -175,7 +155,6 @@ class Login extends Component {
 
           </Form>
         </section>
-
       </div >
     )
   }
@@ -185,5 +164,4 @@ class Login extends Component {
 //   1.前台表单验证
 //   2.收集表单验证数据
 //         */}
-
 export default withRouter(Login);
