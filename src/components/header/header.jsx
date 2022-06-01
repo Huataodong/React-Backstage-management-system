@@ -37,7 +37,7 @@ class Header extends Component {
                 title = item.title
             } else if (item.children) {
                 //在所有子item中查找匹配的
-                const cItem = item.children.find(cItem => cItem.key === path)
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
                 //如果有值说明才匹配
                 if (cItem) {
                     title = cItem.title
@@ -51,7 +51,7 @@ class Header extends Component {
     logout = () => {
         //显示确认框
         Modal.confirm({
-            title: '确定退出吗？',
+            title: 'Are you sure you want to exit？',
             icon: <ExclamationCircleOutlined />,
             onOk: () => {
                 //删除保存user数据
@@ -88,15 +88,13 @@ class Header extends Component {
         return (
             <div className="header">
                 <div className="header-top">
-                    <span>欢迎，{username}</span>
-                    <LinkButton onClick={this.logout}>退出</LinkButton>
+                    <span>{username}</span>
+                    <LinkButton onClick={this.logout}>Logout</LinkButton>
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">{title}</div>
                     <div className="header-bottom-right">
                         <span>{currentTime}</span>
-                        <img src="https://twitter.com/googlecloud/status/1108852285084524549" alt="" />
-                        <span>晴</span>
                     </div>
 
                 </div>

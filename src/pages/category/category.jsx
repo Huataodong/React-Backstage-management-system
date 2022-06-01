@@ -32,20 +32,20 @@ class Category extends Component {
     initColumns = () => {
         return this.columns = [
             {
-                title: '分类名称',
+                title: 'Name',
                 dataIndex: 'name', //显示数据对应的属性名
             },
             {
-                title: '操作',
+                title: 'Operation',
                 width: 500, //此处可以不加px，如果加了px，需要写成‘800px’字符串的形式
                 dataIndex: '',
                 key: 'x',
                 render: (category) => ( //返回需要显示的界面标签
                     <span>
-                        <LinkButton onClick={() => { this.showUpdate(category) }}>修改分类</LinkButton>
+                        <LinkButton onClick={() => { this.showUpdate(category) }}>Modify</LinkButton>
                         {/* 如何向事件回调函数传递参数:先定义一个匿名函数，在函数调用处理的函数并传入数据 */}
                         {
-                            this.state.parentId === '0' ? <LinkButton onClick={() => { this.showSubCategorys(category) }}>查看子分类</LinkButton > : null
+                            this.state.parentId === '0' ? <LinkButton onClick={() => { this.showSubCategorys(category) }}>Subcategories</LinkButton > : null
                         }
 
                     </span>
@@ -147,7 +147,7 @@ class Category extends Component {
             }
         })
             .catch((err) => {
-                message.info('请输入分类名称')
+                message.info('Please enter category name')
             })
 
     }
@@ -203,7 +203,7 @@ class Category extends Component {
 
         const extra = (
             <Button type='primary' icon={<PlusOutlined />} onClick={this.showAdd}>
-                添加
+                Add
             </Button >
         )
 
@@ -213,9 +213,9 @@ class Category extends Component {
         //读取指定的分类
         const category = this.category || { name: '' }//如果还没有数据，则指定一个空对象
 
-        const title = parentId === '0' ? "一级分类列表" : (
+        const title = parentId === '0' ? "First-level classification" : (
             <span>
-                <LinkButton onClick={this.showCategorys}>一级分类列表</LinkButton>
+                <LinkButton onClick={this.showCategorys}>First-level classification</LinkButton>
                 <ArrowRightOutlined style={{ marginRight: 5 }} />
                 <span>{parentName}</span>
             </span>
@@ -235,7 +235,7 @@ class Category extends Component {
                 />
                 {
                     showStatus === 1 ? <Modal
-                        title="添加分类"
+                        title="Add Category"
                         visible={showStatus === 1}
                         onOk={this.addCategory}
                         onCancel={this.handleCancel}>
@@ -247,7 +247,7 @@ class Category extends Component {
                     </Modal> : null
                 }
                 {showStatus === 2 ? <Modal
-                    title="更新分类"
+                    title="Update Category"
                     visible={showStatus === 2}
                     onOk={this.updateCategory}
                     onCancel={this.handleCancel}

@@ -74,7 +74,7 @@ class Login extends Component {
         {/* header--------------------------- */}
         <header className="login-header">
           <img src={logo} alt="logo"></img>
-          <h1>React Project: Backstage management system</h1>
+          <h1>React Project: Content Mmanagement System</h1>
         </header>
 
         {/* Form------------------------------------- */}

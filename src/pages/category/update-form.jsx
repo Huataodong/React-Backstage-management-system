@@ -25,7 +25,7 @@ class UpdateForm extends Component {
         return (
             <Form ref={this.formRef}>
                 <Item name="categoryName" initialValue={categoryName}>
-                    <Input placeholder="请输入分类名称" />
+                    <Input placeholder="Please enter a new name" />
                 </Item>
             </Form>
         );

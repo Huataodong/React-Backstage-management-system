@@ -30,13 +30,13 @@ class AddForm extends Component {
           具体情况可以参考官方文档，见下方链接
           https://ant.design/components/form-cn/#components-form-demo-complex-form-control
           */}
-                    <p>所属分类:</p>
+                    <p>Category Level:</p>
                     <Form.Item
                         noStyle
                         name="parentId"
                         initialValue={this.props.parentId}>
                         <Select value={this.props.parentId} style={{ width: "100%" }}>
-                            <Option value='0'>一级分类</Option>
+                            <Option value='0'>First-level classification</Option>
                             {
                                 this.props.categorys.map((item) => {
                                     return <Option key={item._id} value={item._id}>{item.name}</Option>
@@ -46,17 +46,17 @@ class AddForm extends Component {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item>
-                    <p>分类名称:</p>
+                    <p>Category Name:</p>
                     {/* 此处有坑 */}
                     {/* ----注意 <Form.Item /> 只会对它的直接子元素绑定表单功能 */}
                     <Form.Item
                         noStyle
                         name="categoryName"
                         rules={[
-                            { required: true, message: '分类名称必须输入' },
+                            { required: true, message: 'must enter category name' },
                         ]}
                     >
-                        <Input placeholder="请输入分类名称" />
+                        <Input placeholder="Please enter category name" />
                     </Form.Item>
                 </Form.Item>
             </Form>

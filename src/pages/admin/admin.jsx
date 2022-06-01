@@ -17,6 +17,7 @@ import Bar from '../charts/bar'
 import Line from '../charts/line'
 import Pie from '../charts/pie'
 
+
 const { Footer, Sider, Content } = Layout;
 
 export default class Admin extends Component {
@@ -29,13 +30,13 @@ export default class Admin extends Component {
       return <Redirect to='/login' />
     }
     return (
-      <Layout style={{ height: '100%' }}>
-        <Sider>
+      <Layout>
+        <Sider style={{ backgroundColor: "#b0d2d6" }}>
           <LeftNav />
         </Sider>
-        <Layout>
-          <Header>Header</Header>
-          <Content style={{ margin: '15px', backgroundColor: '#fff' }}>
+        <Layout >
+          <Header >Header</Header>
+          <Content style={{ margin: '15px' }}>
 
             <Switch>
               <Route path='/home' component={Home} />
@@ -49,7 +50,7 @@ export default class Admin extends Component {
               <Redirect to='/home' />
             </Switch>
           </Content>
-          <Footer style={{ textAlign: 'center', color: '#aaaaaa' }}>推荐使用谷歌浏览器，可以获得更加页面操作</Footer>
+          <Footer style={{ textAlign: 'center', color: '#aaaaaa' }}>It is recommended to use Google Chrome for better page operation</Footer>
         </Layout>
       </Layout >
     )

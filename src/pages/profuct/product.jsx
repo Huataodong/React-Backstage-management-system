@@ -4,8 +4,9 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import ProductHome from './home'
 import ProductAddUpdate from './add-update'
 import ProductDetail from './detial'
-//商品首页路由
+import './product.less'
 
+//商品首页路由
 export default class Product extends Component {
     render() {
         return (

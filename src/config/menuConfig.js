@@ -13,53 +13,54 @@ import {
 
 const menuList = [
     {
-        title: '首页', // 菜单标题名称 
+        title: 'Home', // 菜单标题名称 
         key: '/home', // 对应的 path 
         icon: HomeOutlined, // 图标名称
+        isPublic: true, //公开的
     },
     {
-        title: '商品',
+        title: 'Products',
         key: '/products',
         icon: AppstoreOutlined,
         children: [ // 子菜单列表
             {
-                title: '品类管理',
+                title: 'Categories',
                 key: '/category',
                 icon: DatabaseOutlined
             }, {
-                title: '商品管理',
+                title: 'Management',
                 key: '/product',
                 icon: BarcodeOutlined
             },
         ]
     },
     {
-        title: '用户管理',
+        title: 'User',
         key: '/user',
         icon: UserOutlined,
     },
     {
-        title: '角色管理',
+        title: 'Authorization',
         key: '/role',
         icon: SafetyOutlined,
     },
     {
-        title: '图形图表',
+        title: 'Charts',
         key: '/charts',
         icon: AreaChartOutlined,
         children: [
             {
-                title: '柱形图',
+                title: 'Bar chart',
                 key: '/charts/bar',
                 icon: BarChartOutlined
             },
             {
-                title: '折线图',
+                title: 'Line chart',
                 key: '/charts/line',
                 icon: LineChartOutlined
             },
             {
-                title: '饼图',
+                title: 'Pie Chart',
                 key: '/charts/pie',
                 icon: PieChartOutlined
             },
